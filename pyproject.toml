@@ -1,0 +1,49 @@
+[project]
+name = "fabopsy-face"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.10"
+dependencies = [
+    # "fabopsy-lib",
+    "numpy>=2.2.6",
+    "onnx>=1.20.1",
+    "onnxruntime-gpu>=1.23.2",
+    "opencv-python>=4.11.0.86",
+    "safetensors>=0.7.0",
+    "torch>=2.9.1",
+    "torchvision>=0.24.1",
+]
+
+[tool.setuptools]
+package-data = { "fabopsy_face" = ["references/*", "modules/*"] }
+
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cu126", marker = "sys_platform == 'linux' or (sys_platform == 'win32' and platform_machine == 'AMD64')" },
+    { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+]
+
+torchvision = [
+    { index = "pytorch-cu126", marker = "sys_platform == 'linux' or (sys_platform == 'win32' and platform_machine == 'AMD64')" },
+    { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+]
+
+torchaudio = [
+    { index = "pytorch-cu126", marker = "sys_platform == 'linux' or (sys_platform == 'win32' and platform_machine == 'AMD64')" },
+    { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[dependency-groups]
+dev = [
+    "streamlit>=1.56.0",
+]

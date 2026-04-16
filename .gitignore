@@ -1,0 +1,13 @@
+# project
+/.idea/
+/.venv/
+/dist/
+/*.egg-info/
+
+# compiled files
+__pycache__/
+*.pyc
+
+# models
+*.onnx
+*.safetensors

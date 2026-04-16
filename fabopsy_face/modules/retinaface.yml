@@ -1,0 +1,52 @@
+version: '1.0'
+module:
+  uid: 2d26342c-d12f-4c22-a293-f67ffc4a0dff
+  name: RetinaFace
+  version: 0.0.1
+  description: 'A PyTorch implementation of RetinaFace: Single-stage Dense Face Localisation in the Wild.'
+  keywords:
+    - Face
+    - Detection
+  requirements:
+    - numpy>=2.2.6
+    - opencv-python>=4.11.0.86
+    - safetensors>=0.7.0
+    - torch>=2.9.1
+    - torchvision>=0.24.1
+packages:
+  - uid: 3560b831-6169-4d17-8c4e-50628bfb6bab
+    name: RetinaFace
+    version: 0.0.1
+    usage_models: []
+    inputs: []
+    provides:
+      - face/detection
+      - face/landmark_5
+    requires: []
+    entry:
+      method: fabopsy_face.retinaface.package.load
+    parameters:
+      - name: threshold
+        type: number
+        value: 0.6
+        description: Face detection confidence
+    models:
+      - uid: bfab82a2-0863-44df-896e-031269844d8d
+        name: mobilenet0.25_Final.safetensors
+        version: 0.0.1
+        recommended: true
+        metadata:
+          network: mobile0.25
+        download:
+          index: mobilenet0.25_Final.safetensors
+          sha256: ed8634b7b067e4be4921b3d1e93868d6224ddbfbc7eba693c80594fbcdd28fb2
+          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/retinaface/mobilenet0.25_Final.safetensors
+      - uid: b3a37417-e2a9-4709-8619-dd53026fc5a4
+        name: Resnet50_Final.safetensors
+        version: 0.0.1
+        metadata:
+          network: resnet50
+        download:
+          index: Resnet50_Final.safetensors
+          sha256: c4f365f8288288d1c28f66f96b73b16b57d04851ce813c23b45d5b73b405d32a
+          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/retinaface/Resnet50_Final.safetensors
