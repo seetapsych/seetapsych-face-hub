@@ -1,6 +1,6 @@
-# FaboPsy Lib
+# FaboPsy Face
 
-> Face and body based psychology analysis
+> Face modules for FaboPsy
 
 ## Install PyTorch
 
@@ -11,4 +11,4 @@ UV_TORCH_BACKEND=auto uv pip install torch torchvision
 
 ## References
 
-- [Arc2Face](https://github.com/foivospar/Arc2Face)
+- [Pytorch_Retinaface](https://github.com/biubug6/Pytorch_Retinaface)
