@@ -11,4 +11,5 @@ UV_TORCH_BACKEND=auto uv pip install torch torchvision
 
 ## References
 
+- [InsightFace](https://github.com/deepinsight/insightface)
 - [Pytorch_Retinaface](https://github.com/biubug6/Pytorch_Retinaface)

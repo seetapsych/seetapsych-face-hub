@@ -1,0 +1,52 @@
+version: '1.0'
+module:
+  uid: 2855fd79-4e16-4958-b680-f9ecdcbbfeab
+  name: InsightFace
+  version: 0.0.1
+  description: 'RetinaFace integrated in InsightFace release version.'
+  keywords:
+    - Face
+    - Detection
+  requirements:
+    - onnxruntime-gpu>=1.23.2
+    - opencv-python>=4.11.0.86
+packages:
+  - uid: c938b879-44db-45b0-9a5d-8377f0ace5e5
+    name: InsightFace Detector
+    version: 0.0.1
+    usage_models: []
+    inputs: []
+    provides:
+      - face/detection
+      - face/landmark_5
+    requires: []
+    entry:
+      method: fabopsy_face.insightface.retinaface.package.load
+    parameters:
+      - name: input_size
+        type: number[]
+        value: [640, 640]
+        description: Network input size affects detection speed and accuracy
+    models:
+      - uid: 99afdb14-4827-49a6-b85a-2bda67dee790
+        name: det_10g.onnx
+        version: 0.0.1
+        recommended: true
+        download:
+          index: det_10g.onnx
+          sha256: 5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91
+          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_10g.onnx
+      - uid: af09f5d7-7120-4b13-a398-e501e49ab36c
+        name: det_2.5g.onnx
+        version: 0.0.1
+        download:
+          index: det_2.5g.onnx
+          sha256: 5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91
+          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_2.5g.onnx
+      - uid: 1deb39b1-1074-4f6e-b81e-a6a843d011eb
+        name: det_500m.onnx
+        version: 0.0.1
+        download:
+          index: det_500m.onnx
+          sha256: 5e4447f50245bbd7966bd6c0fa52938c61474a04ec7def48753668a9d8b4ea3a
+          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_500m.onnx
