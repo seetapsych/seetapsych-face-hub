@@ -1,0 +1,109 @@
+version: '1.0'
+module:
+  uid: 19da81a5-6c9f-4a7b-b388-86f9e03dc6c1
+  name: MediaPipe
+  version: 0.0.1
+  description: 'Face Detector and Landmarker of MediaPipe'
+  keywords:
+    - Face
+    - Detection
+    - Landmarker
+  requirements:
+    - mediapipe>=0.10.33
+packages:
+  - uid: 56d8a9a9-0ad9-4d90-ad3f-ffc2f51c1597
+    name: MediaPipe Face Detector
+    version: 0.0.1
+    usage_models: []
+    inputs: []
+    provides:
+      - face/detection
+    requires: []
+    entry:
+      method: fabopsy_face.mediapipe.face_detector.package.load
+    parameters:
+      - name: running_mode
+        type: selection
+        value: IMAGE
+        selection: [IMAGE, VIDEO, LIVE_STREAM]
+        description: Sets the running mode for the task. [IMAGE, VIDEO, LIVE_STREAM].
+      - name: min_detection_confidence
+        type: number
+        value: 0.5
+        description: The minimum confidence score for the face detection to be considered successful.
+      - name: min_suppression_threshold
+        type: number
+        value: 0.3
+        description: The minimum non-maximum-suppression threshold for face detection to be considered overlapped.
+    models:
+      - uid: e12c713f-42d5-4fa9-a0bc-5a8713b1d27d
+        name: blaze_face_full_range.tflite
+        version: 0.0.1
+        recommended: true
+        download:
+          index: blaze_face_full_range.tflite
+          sha256: 3698b18f063835bc609069ef052228fbe86d9c9a6dc8dcb7c7c2d69aed2b181b
+          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_detector/blaze_face_full_range.tflite
+      - uid: a08ffb34-9d65-494d-806d-8dd467fb1a2b
+        name: blaze_face_full_range_sparse.tflite
+        version: 0.0.1
+        download:
+          index: blaze_face_full_range_sparse.tflite
+          sha256: 2c3728e6da56f21e21a320433396fb06d40d9088f2247c05e5635a688d45dfe1
+          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_detector/blaze_face_full_range_sparse.tflite
+      - uid: d36eeeec-5d0c-4a83-b420-d2709c06bd35
+        name: blaze_face_short_range.tflite
+        version: 0.0.1
+        download:
+          index: blaze_face_short_range.tflite
+          sha256: b4578f35940bf5a1a655214a1cce5cab13eba73c1297cd78e1a04c2380b0152f
+          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_detector/blaze_face_short_range.tflite
+  - uid: 8e646eec-e50f-4102-a658-1449d04296fb
+    name: MediaPipe Face Mesh
+    version: 0.0.1
+    usage_models: []
+    inputs: []
+    provides:
+      - face/mesh
+    requires: []
+    entry:
+      method: fabopsy_face.mediapipe.face_landmarker.package.load
+    parameters:
+      - name: running_mode
+        type: selection
+        value: IMAGE
+        selection: [IMAGE, VIDEO, LIVE_STREAM]
+        description: Sets the running mode for the task. [IMAGE, VIDEO, LIVE_STREAM].
+      - name: num_faces
+        type: integer
+        value: 1
+        description: The maximum number of faces that can be detected by the the FaceLandmarker. Smoothing is only applied when num_faces is set to 1.
+      - name: min_face_detection_confidence
+        type: number
+        value: 0.5
+        description: The minimum confidence score for the face detection to be considered successful.
+      - name: min_face_presence_confidence
+        type: number
+        value: 0.5
+        description: The minimum confidence score of face presence score in the face landmark detection.
+      - name: min_tracking_confidence
+        type: number
+        value: 0.5
+        description: The minimum confidence score for the face tracking to be considered successful.
+      - name: output_face_blendshapes
+        type: boolean
+        value: false
+        description: Whether Face Landmarker outputs face blendshapes. Face blendshapes are used for rendering the 3D face model.
+      - name: output_facial_transformation_matrixes
+        type: boolean
+        value: false
+        description: Whether FaceLandmarker outputs the facial transformation matrix. FaceLandmarker uses the matrix to transform the face landmarks from a canonical face model to the detected face, so users can apply effects on the detected landmarks.
+    models:
+      - uid: 5293454d-2060-4350-ad22-ab6a24207878
+        name: face_landmarker.task
+        version: 0.0.1
+        recommended: true
+        download:
+          index: face_landmarker.task
+          sha256: 64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff
+          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_landmarker/face_landmarker.task

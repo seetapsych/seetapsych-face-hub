@@ -18,7 +18,7 @@ packages:
     inputs: []
     provides:
       - face/detection
-      - face/landmark_5
+      - face/landmarks
     requires: []
     entry:
       method: fabopsy_face.insightface.retinaface.package.load

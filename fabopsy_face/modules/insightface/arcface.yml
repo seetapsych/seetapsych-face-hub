@@ -20,7 +20,7 @@ packages:
     provides:
       - face/feature
     requires:
-      - face/landmark_5
+      - face/landmarks
     entry:
       method: fabopsy_face.insightface.arcface.package.load
     models:

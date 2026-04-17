@@ -25,7 +25,7 @@ class Instance(api.Instance):
         dets, kpss = self.__retinaface.detect(input_data, input_size=self.__input_size)
 
         face_detection = []
-        face_landmark_5 = []
+        face_landmarks = []
 
         for det, kps in zip(dets, kpss):
             det = det.tolist()
@@ -34,13 +34,13 @@ class Instance(api.Instance):
                 'xyxy': det[:4],
                 'score': det[4]
             })
-            face_landmark_5.append({
+            face_landmarks.append({
                 'landmarks':  [v for p in kps for v in p]
             })
 
         return {
             'face_detection': face_detection,
-            'face_landmark_5': face_landmark_5,
+            'face_landmarks': face_landmarks,
         }
 
 

@@ -24,15 +24,15 @@ class Instance(api.Instance):
 
         # got landmarks
         # face_detection = report.get('face_detection', [])
-        face_landmark_5 = report.get('face_landmark_5', [])
+        face_landmarks = report.get('face_landmarks', [])
 
         face_feature = []
 
 
-        for face_landmarks in face_landmark_5:
+        for the_landmarks in face_landmarks:
             # xyxy = face_box.get('xyxy', [])
             # score = face_box.get('score', 0)
-            landmarks = face_landmarks.get('landmarks', [])
+            landmarks = the_landmarks.get('landmarks', [])
 
             # xyxy = numpy.asarray(xyxy)
             landmarks = numpy.asarray(landmarks).reshape((-1, 2))

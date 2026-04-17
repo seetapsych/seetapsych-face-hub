@@ -117,7 +117,7 @@ class Instance(api.Instance):
         dets = dets[dets[:, 4] >= output_threshold]
 
         face_detection = []
-        face_landmark_5 = []
+        face_landmarks = []
 
         for det in dets:
             det = det.tolist()
@@ -125,13 +125,13 @@ class Instance(api.Instance):
                 'xyxy': det[:4],
                 'score': det[4]
             })
-            face_landmark_5.append({
+            face_landmarks.append({
                 'landmarks': det[5:]
             })
 
         return {
             'face_detection': face_detection,
-            'face_landmark_5': face_landmark_5,
+            'face_landmarks': face_landmarks,
         }
 
 
