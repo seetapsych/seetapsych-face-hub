@@ -5,7 +5,7 @@ description = "Face modules for FaboPsy"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    # "fabopsy-lib",
+    "fabopsy-lib>=0.0.1",
     "mediapipe>=0.10.33",
     "numpy>=2.2.6",
     "onnx>=1.20.1",
@@ -20,6 +20,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "build>=1.4.4",
+    "fabopsy-attributes>=0.0.1",
     "streamlit>=1.56.0",
     "twine>=6.2.0",
 ]
