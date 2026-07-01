@@ -65,7 +65,8 @@ packages:
     inputs: []
     provides:
       - face/mesh
-    requires: []
+    requires:
+      - face/detection
     entry:
       method: fabopsy_face.mediapipe.face_landmarker.package.load
     parameters:

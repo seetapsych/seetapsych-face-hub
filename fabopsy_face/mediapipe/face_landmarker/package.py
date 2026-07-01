@@ -50,19 +50,54 @@ class Instance(api.Instance):
         input_data = data['default']
         input_data = numpy.ascontiguousarray(input_data)  # [H, W, C] format
 
-        image = mp.Image(mp.ImageFormat.SRGB, numpy.ascontiguousarray(input_data[:, :, ::-1]))   # convert to RGB input
+        rgb_data = input_data[:, :, ::-1]
+        # image = mp.Image(mp.ImageFormat.SRGB, numpy.ascontiguousarray(rgb_data))   # convert to RGB input
 
-        detection_result = self.__detector.detect(image)
+        # preload face_detection
+        face_detection = report.get('face_detection', [])
 
-        face_landmarks = []
+        face_mesh_landmarks = []
 
-        for the_landmarks in detection_result.face_landmarks:
-            face_landmarks.append({
-                'normalized_3d_landmarks': [v for p in the_landmarks for v in (p.x, p.y, p.z)],
-            })
+        height, width = input_data.shape[:2]
+        for the_detection in face_detection:
+            left, top, right, bottom = the_detection['xyxy']
+            cx = (left + right) / 2
+            cy = (bottom + top) / 2
+            size = max(right - left, bottom - top) * 1.2
 
+            left, top, right, bottom = cx -  size / 2, cy - size / 2, cx + size / 2, cy + size / 2
+
+            left = int(left)
+            right = int(right)
+            top = int(top)
+            bottom = int(bottom)
+
+            left = max(0, min(width - 1, left))
+            top = max(0, min(height - 1, top))
+            right = max(left, min(width - 1, right))
+            bottom = max(top, min(height - 1, bottom))
+
+            roi = rgb_data[top:bottom, left:right]
+            roi_image = mp.Image(mp.ImageFormat.SRGB, numpy.ascontiguousarray(roi))
+
+            detection_result = self.__detector.detect(roi_image)
+
+            if detection_result.face_landmarks:
+                the_landmarks = detection_result.face_landmarks[0]
+
+                point3ds = numpy.asarray([v for p in the_landmarks for v in (p.x, p.y, p.z)]).reshape([-1, 3])
+                point3ds *= [(right - left) / width, (bottom - top) / height, 1]
+                point3ds += [left / width, top / height, 0]
+
+                face_mesh_landmarks.append({
+                    'normalized_3d_landmarks': point3ds.flatten().tolist(),
+                })
+            else:
+                face_mesh_landmarks.append({
+                    'normalized_3d_landmarks': [],
+                })
         return {
-            'face_mesh': face_landmarks,
+            'face_mesh': face_mesh_landmarks,
         }
 
 
