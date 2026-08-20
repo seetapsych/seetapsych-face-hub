@@ -28,14 +28,14 @@ packages:
         value: [640, 640]
         description: Network input size affects detection speed and accuracy
     models:
-      - uid: 99afdb14-4827-49a6-b85a-2bda67dee790
-        name: det_10g.onnx
+      - uid: 1deb39b1-1074-4f6e-b81e-a6a843d011eb
+        name: det_500m.onnx
         version: 0.0.1
         recommended: true
         download:
-          index: det_10g.onnx
-          sha256: 5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_10g.onnx
+          index: det_500m.onnx
+          sha256: 5e4447f50245bbd7966bd6c0fa52938c61474a04ec7def48753668a9d8b4ea3a
+          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_500m.onnx
       - uid: af09f5d7-7120-4b13-a398-e501e49ab36c
         name: det_2.5g.onnx
         version: 0.0.1
@@ -43,10 +43,10 @@ packages:
           index: det_2.5g.onnx
           sha256: 5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91
           url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_2.5g.onnx
-      - uid: 1deb39b1-1074-4f6e-b81e-a6a843d011eb
-        name: det_500m.onnx
+      - uid: 99afdb14-4827-49a6-b85a-2bda67dee790
+        name: det_10g.onnx
         version: 0.0.1
         download:
-          index: det_500m.onnx
-          sha256: 5e4447f50245bbd7966bd6c0fa52938c61474a04ec7def48753668a9d8b4ea3a
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_500m.onnx
+          index: det_10g.onnx
+          sha256: 5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91
+          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_10g.onnx
