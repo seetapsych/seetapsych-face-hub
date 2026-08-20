@@ -100,6 +100,9 @@ class Instance(api.Instance):
             'face_mesh': face_mesh_landmarks,
         }
 
+    def dispose(self):
+        self.__detector.close()
+
 
 class Package(api.Package):
     def create(self, *,

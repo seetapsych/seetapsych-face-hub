@@ -61,6 +61,9 @@ class Instance(api.Instance):
             'face_detection': face_detection,
         }
 
+    def dispose(self):
+        self.__detector.close()
+
 
 class Package(api.Package):
     def create(self, *,
