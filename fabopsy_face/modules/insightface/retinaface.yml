@@ -41,7 +41,7 @@ packages:
         version: 0.0.1
         download:
           index: det_2.5g.onnx
-          sha256: 5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91
+          sha256: 041f73f47371333d1d17a6fee6c8ab4e6aecabefe398ff32cca4e2d5eaee0af9
           url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_2.5g.onnx
       - uid: 99afdb14-4827-49a6-b85a-2bda67dee790
         name: det_10g.onnx
