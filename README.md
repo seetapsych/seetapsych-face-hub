@@ -1,6 +1,6 @@
-# FaboPsy Face
+# SeetaPsych Face
 
-> Face modules for FaboPsy
+> Face modules for SeetaPsych
 
 ## Install PyTorch
 

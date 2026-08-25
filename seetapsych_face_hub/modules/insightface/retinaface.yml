@@ -8,7 +8,8 @@ module:
     - Face
     - Detection
   requirements:
-    - onnxruntime-gpu>=1.23.2
+    - onnxruntime-gpu>=1.24; python_version > '3.10'
+    - onnxruntime-gpu<1.24; python_version <= '3.10'
     - opencv-python>=4.11.0.86
 packages:
   - uid: c938b879-44db-45b0-9a5d-8377f0ace5e5
@@ -21,7 +22,7 @@ packages:
       - face/landmarks
     requires: []
     entry:
-      method: fabopsy_face.insightface.retinaface.package.load
+      method: seetapsych_face_hub.insightface.retinaface.package.load
     parameters:
       - name: input_size
         type: number[]

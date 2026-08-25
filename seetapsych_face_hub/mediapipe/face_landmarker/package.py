@@ -8,7 +8,7 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 from mediapipe.tasks.python.vision.core.vision_task_running_mode import VisionTaskRunningMode
 
-from fabopsy_lib import api
+from seetapsych_lib import api
 
 
 class Instance(api.Instance):

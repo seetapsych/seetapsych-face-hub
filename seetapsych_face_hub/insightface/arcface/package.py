@@ -4,8 +4,8 @@ from typing import Any
 
 import numpy
 
-from fabopsy_lib import api
-from fabopsy_lib.onnx.session import OnnxSession
+from seetapsych_lib import api
+from seetapsych_lib.onnx.session import OnnxSession
 
 from .arcface_onnx import ArcFaceONNX
 from .common import Face

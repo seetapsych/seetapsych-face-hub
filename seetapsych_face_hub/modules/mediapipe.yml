@@ -20,7 +20,7 @@ packages:
       - face/detection
     requires: []
     entry:
-      method: fabopsy_face.mediapipe.face_detector.package.load
+      method: seetapsych_face_hub.mediapipe.face_detector.package.load
     parameters:
       - name: running_mode
         type: selection
@@ -68,7 +68,7 @@ packages:
     requires:
       - face/detection
     entry:
-      method: fabopsy_face.mediapipe.face_landmarker.package.load
+      method: seetapsych_face_hub.mediapipe.face_landmarker.package.load
     parameters:
       - name: running_mode
         type: selection

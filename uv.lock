@@ -747,23 +747,23 @@ wheels = [
 ]
 
 [[package]]
-name = "fabopsy-attributes"
+name = "seetapsych-attributes"
 version = "0.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/56/b2/9b0d3ad137fd955be59b67a1b68372ed54b0dd62f9f85fb660de91f5f4be/fabopsy_attributes-0.0.1.tar.gz", hash = "sha256:4a7f2c9f3d0771d646caf53c2441008d9a8a27fda0cb9727c96c5239c0584f8c", size = 54553, upload-time = "2026-04-24T10:34:48.151Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/56/b2/9b0d3ad137fd955be59b67a1b68372ed54b0dd62f9f85fb660de91f5f4be/seetapsych_attributes-0.0.1.tar.gz", hash = "sha256:4a7f2c9f3d0771d646caf53c2441008d9a8a27fda0cb9727c96c5239c0584f8c", size = 54553, upload-time = "2026-04-24T10:34:48.151Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/78/04/613b3e48d2e0c35053c3a4ccb343d025ef6a483424158f093d26b2c03517/fabopsy_attributes-0.0.1-py3-none-any.whl", hash = "sha256:ca8eed15c32f46cc076a8dcdcdd53c079f2b2217c491404f69f4302253a63df2", size = 3678, upload-time = "2026-04-24T10:34:46.203Z" },
+    { url = "https://files.pythonhosted.org/packages/78/04/613b3e48d2e0c35053c3a4ccb343d025ef6a483424158f093d26b2c03517/seetapsych_attributes-0.0.1-py3-none-any.whl", hash = "sha256:ca8eed15c32f46cc076a8dcdcdd53c079f2b2217c491404f69f4302253a63df2", size = 3678, upload-time = "2026-04-24T10:34:46.203Z" },
 ]
 
 [[package]]
-name = "fabopsy-face"
+name = "seetapsych-face-hub"
 version = "0.0.1"
 source = { editable = "." }
 dependencies = [
-    { name = "fabopsy-lib" },
+    { name = "seetapsych-lib" },
     { name = "mediapipe" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.4.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
@@ -785,14 +785,14 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "build" },
-    { name = "fabopsy-attributes" },
+    { name = "seetapsych-attributes" },
     { name = "streamlit" },
     { name = "twine" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "fabopsy-lib", specifier = ">=0.0.1" },
+    { name = "seetapsych-lib", specifier = ">=0.0.1" },
     { name = "mediapipe", specifier = ">=0.10.33" },
     { name = "numpy", specifier = ">=2.2.6" },
     { name = "onnx", specifier = ">=1.20.1" },
@@ -811,13 +811,13 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "build", specifier = ">=1.4.4" },
-    { name = "fabopsy-attributes", specifier = ">=0.0.1" },
+    { name = "seetapsych-attributes", specifier = ">=0.0.1" },
     { name = "streamlit", specifier = ">=1.56.0" },
     { name = "twine", specifier = ">=6.2.0" },
 ]
 
 [[package]]
-name = "fabopsy-lib"
+name = "seetapsych-lib"
 version = "0.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
@@ -833,9 +833,9 @@ dependencies = [
     { name = "tomli" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/83/d4/1c874b4f5c2265473a48fc20dc33c33266d80299bd76ee221b4a192231e7/fabopsy_lib-0.0.1.tar.gz", hash = "sha256:963f819fe0ffed22f25079f88473d1ddc7f1f741cf15b95529e06b3deeeea0e2", size = 161987, upload-time = "2026-04-24T10:28:16.98Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/83/d4/1c874b4f5c2265473a48fc20dc33c33266d80299bd76ee221b4a192231e7/seetapsych_lib-0.0.1.tar.gz", hash = "sha256:963f819fe0ffed22f25079f88473d1ddc7f1f741cf15b95529e06b3deeeea0e2", size = 161987, upload-time = "2026-04-24T10:28:16.98Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e5/a0/dcc4823ee1464b0b516bd5d6ace2b49407cbeea8c17eb27899e766b1026f/fabopsy_lib-0.0.1-py3-none-any.whl", hash = "sha256:7e19c922193c8d9f76719849fa7a4d7910ae3cb28de4061ea1cc69762ceae09f", size = 46172, upload-time = "2026-04-24T10:28:15.039Z" },
+    { url = "https://files.pythonhosted.org/packages/e5/a0/dcc4823ee1464b0b516bd5d6ace2b49407cbeea8c17eb27899e766b1026f/seetapsych_lib-0.0.1-py3-none-any.whl", hash = "sha256:7e19c922193c8d9f76719849fa7a4d7910ae3cb28de4061ea1cc69762ceae09f", size = 46172, upload-time = "2026-04-24T10:28:15.039Z" },
 ]
 
 [[package]]

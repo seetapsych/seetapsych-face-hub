@@ -4,11 +4,11 @@ import os
 
 import cv2
 
-from fabopsy_lib.runtime.factory import Factory
-from fabopsy_lib.runtime.pipeline import Pipeline
-from fabopsy_lib.runtime.runner import Runner
+from seetapsych_lib.runtime.factory import Factory
+from seetapsych_lib.runtime.pipeline import Pipeline
+from seetapsych_lib.runtime.runner import Runner
 
-module_root = os.path.join(os.path.dirname(__file__), '../fabopsy_face/modules')
+module_root = os.path.join(os.path.dirname(__file__), '../seetapsych_face_hub/modules')
 
 
 def main():

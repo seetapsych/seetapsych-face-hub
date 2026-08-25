@@ -6,7 +6,7 @@ import numpy
 import torch
 import safetensors.torch
 
-from fabopsy_lib import api
+from seetapsych_lib import api
 
 from .models.retinaface import RetinaFace
 from .data import cfg_mnet, cfg_re50

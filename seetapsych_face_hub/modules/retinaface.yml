@@ -24,7 +24,7 @@ packages:
       - face/landmarks
     requires: []
     entry:
-      method: fabopsy_face.retinaface.package.load
+      method: seetapsych_face_hub.retinaface.package.load
     parameters:
       - name: threshold
         type: number
