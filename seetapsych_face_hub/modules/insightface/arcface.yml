@@ -9,6 +9,7 @@ module:
     - Feature
   requirements:
     - seetapsych-face-hub
+    - onnx>=1.20.1
     - onnxruntime-gpu>=1.24; python_version > '3.10'
     - onnxruntime-gpu<1.24; python_version <= '3.10'
     - opencv-python>=4.11.0.86
