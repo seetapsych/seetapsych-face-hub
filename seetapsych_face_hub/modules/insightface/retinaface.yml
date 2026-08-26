@@ -8,6 +8,7 @@ module:
     - Face
     - Detection
   requirements:
+    - seetapsych-face-hub
     - onnxruntime-gpu>=1.24; python_version > '3.10'
     - onnxruntime-gpu<1.24; python_version <= '3.10'
     - opencv-python>=4.11.0.86
@@ -15,6 +16,7 @@ packages:
   - uid: c938b879-44db-45b0-9a5d-8377f0ace5e5
     name: InsightFace Detector
     version: 0.0.1
+    priority: 100
     usage_models: []
     inputs: []
     provides:

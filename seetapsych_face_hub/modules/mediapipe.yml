@@ -9,6 +9,7 @@ module:
     - Detection
     - Landmarker
   requirements:
+    - seetapsych-face-hub
     - mediapipe>=0.10.33
 packages:
   - uid: 56d8a9a9-0ad9-4d90-ad3f-ffc2f51c1597
