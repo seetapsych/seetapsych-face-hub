@@ -4,6 +4,7 @@ description = "Face modules for SeetaPsych"
 readme = "README.md"
 requires-python = ">=3.10"
 dynamic = ["version"]
+license = { file = "LICENSE" }
 dependencies = [
     "seetapsych-lib",
     "mediapipe>=0.10.33",
