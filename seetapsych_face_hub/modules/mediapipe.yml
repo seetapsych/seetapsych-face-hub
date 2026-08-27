@@ -13,7 +13,7 @@ module:
     - mediapipe>=0.10.33
 packages:
   - uid: 56d8a9a9-0ad9-4d90-ad3f-ffc2f51c1597
-    name: MediaPipe Face Detector
+    name: FaceDetection(MediaPipe)
     version: 0.0.1
     usage_models: []
     inputs: []
@@ -60,7 +60,7 @@ packages:
           sha256: b4578f35940bf5a1a655214a1cce5cab13eba73c1297cd78e1a04c2380b0152f
           url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_detector/blaze_face_short_range.tflite
   - uid: 8e646eec-e50f-4102-a658-1449d04296fb
-    name: MediaPipe Face Mesh
+    name: FaceMesh(MediaPipe)
     version: 0.0.1
     usage_models: []
     inputs: []

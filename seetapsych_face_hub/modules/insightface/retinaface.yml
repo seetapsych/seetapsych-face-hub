@@ -17,7 +17,7 @@ module:
     - opencv-python>=4.11.0.86
 packages:
   - uid: c938b879-44db-45b0-9a5d-8377f0ace5e5
-    name: InsightFace Detector
+    name: RetinaFace(InsightFace)
     version: 0.0.1
     priority: 100
     usage_models: []

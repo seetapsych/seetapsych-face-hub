@@ -18,7 +18,7 @@ module:
     - scikit-image>=0.25.2
 packages:
   - uid: a761cb3a-dba8-4b73-bc2b-6a1c02e55a27
-    name: InsightFace Feature
+    name: ArcFace(InsightFace)
     version: 0.0.1
     usage_models: []
     inputs: []

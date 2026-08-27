@@ -16,7 +16,7 @@ module:
     - torchvision>=0.24.1
 packages:
   - uid: 3560b831-6169-4d17-8c4e-50628bfb6bab
-    name: RetinaFace
+    name: RetinaFace(Ver. PyTorch)
     version: 0.0.1
     usage_models: []
     inputs: []
