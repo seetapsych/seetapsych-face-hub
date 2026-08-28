@@ -14,6 +14,7 @@ module:
 packages:
   - uid: 56d8a9a9-0ad9-4d90-ad3f-ffc2f51c1597
     name: FaceDetection(MediaPipe)
+    description: Detect face bounding boxes via MediaPipe BlazeFace detector
     version: 0.0.1
     usage_models: []
     inputs: []
@@ -61,6 +62,7 @@ packages:
           url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_detector/blaze_face_short_range.tflite
   - uid: 8e646eec-e50f-4102-a658-1449d04296fb
     name: FaceMesh(MediaPipe)
+    description: Extract 468-point 3D face mesh landmarks with optional blendshapes
     version: 0.0.1
     usage_models: []
     inputs: []

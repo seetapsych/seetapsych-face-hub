@@ -19,6 +19,7 @@ module:
 packages:
   - uid: a761cb3a-dba8-4b73-bc2b-6a1c02e55a27
     name: ArcFace(InsightFace)
+    description: Extract normalized 512-dim face embedding vectors for face recognition
     version: 0.0.1
     usage_models: []
     inputs: []

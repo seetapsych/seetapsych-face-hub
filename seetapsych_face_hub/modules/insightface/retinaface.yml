@@ -18,6 +18,7 @@ module:
 packages:
   - uid: c938b879-44db-45b0-9a5d-8377f0ace5e5
     name: RetinaFace(InsightFace)
+    description: Detect face bounding boxes and 5-point landmarks via InsightFace ONNX models
     version: 0.0.1
     priority: 100
     usage_models: []

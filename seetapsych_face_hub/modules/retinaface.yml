@@ -17,6 +17,7 @@ module:
 packages:
   - uid: 3560b831-6169-4d17-8c4e-50628bfb6bab
     name: RetinaFace(Ver. PyTorch)
+    description: PyTorch RetinaFace for face detection and 5-point facial landmark localization
     version: 0.0.1
     usage_models: []
     inputs: []
