@@ -9,6 +9,11 @@ dependencies = [
     "seetapsych-lib",
 ]
 
+[project.urls]
+Homepage = "https://github.com/seetapsych/seetapsych-face-hub"
+Repository = "https://github.com/seetapsych/seetapsych-face-hub"
+Issues = "https://github.com/seetapsych/seetapsych-face-hub/issues"
+
 [project.optional-dependencies]
 all = [
     "mediapipe>=0.10.33",
