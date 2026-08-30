@@ -26,11 +26,11 @@ from seetapsych_lib.runtime.factory import Factory
 from seetapsych_lib.runtime.pipeline import Pipeline
 
 factory = Factory()
-factory.load_file_modules('seetapsych_face_hub/modules/insightface/retinaface.yml')
+factory.load_file_modules("seetapsych_face_hub/modules/insightface/retinaface.yml")
 
 pipeline = Pipeline(factory, ...)
 
-pipeline.add_attributes('face/detection')
+pipeline.add_attributes("face/detection")
 ```
 
 ## Introduction

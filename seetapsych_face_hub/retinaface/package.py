@@ -3,33 +3,33 @@
 from typing import Any, Literal
 
 import numpy
-import torch
 import safetensors.torch
-
+import torch
 from seetapsych_lib import api
 
-from .models.retinaface import RetinaFace
-from .data import cfg_mnet, cfg_re50
-from .layers.functions.prior_box import PriorBox
-from .utils.box_utils import decode, decode_landm
-from .utils.nms.py_cpu_nms import py_cpu_nms
+from .lib.data import cfg_mnet, cfg_re50
+from .lib.layers.functions.prior_box import PriorBox
+from .lib.models.retinaface import RetinaFace
+from .lib.utils.box_utils import decode, decode_landm
+from .lib.utils.nms.py_cpu_nms import py_cpu_nms
 
 
 class Instance(api.Instance):
-    def __init__(self, network: Literal['mobile0.25', 'resnet50'], model_path: str, device: api.Device,
-                 threshold: float = 0.6):
+    def __init__(
+        self, network: Literal["mobile0.25", "resnet50"], model_path: str, device: api.Device, threshold: float = 0.6
+    ):
         torch_device = torch.device(str(device))
         with torch.no_grad():
             match network:
-                case 'mobile0.25':
+                case "mobile0.25":
                     cfg = cfg_mnet
-                case 'resnet50':
+                case "resnet50":
                     cfg = cfg_re50
                 case _:
-                    raise RuntimeError(f'network must be mobile0.25 or resnet50, got {network}')
-            cfg['pretrain'] = False
+                    raise RuntimeError(f"network must be mobile0.25 or resnet50, got {network}")
+            cfg["pretrain"] = False
 
-            net = RetinaFace(cfg=cfg, phase='test')
+            net = RetinaFace(cfg=cfg, phase="test")
 
             state_dict = safetensors.torch.load_file(model_path)
             net.load_state_dict(state_dict, strict=False)
@@ -42,10 +42,7 @@ class Instance(api.Instance):
         self.__cfg = cfg
         self.__threshold = threshold
 
-    def inference(self, *,
-                  data: dict[str, Any],
-                  report: dict[str, Any],
-                  **kwargs) -> dict[str, Any]:
+    def inference(self, *, data: dict[str, Any], report: dict[str, Any], **kwargs: Any) -> dict[str, Any]:
         device = self.__torch_device
         net = self.__net
         cfg = self.__cfg
@@ -58,33 +55,44 @@ class Instance(api.Instance):
         keep_top_k = 750
 
         with torch.no_grad():
-            input_data = data['default']
+            input_data = data["default"]
             input_data = numpy.ascontiguousarray(input_data)  # [H, W, C] format
 
-            img = numpy.float32(input_data)
+            img = numpy.asarray(input_data, dtype=numpy.float32)
 
             im_height, im_width, _ = img.shape
             scale = torch.Tensor([img.shape[1], img.shape[0], img.shape[1], img.shape[0]])
             img -= (104, 117, 123)
             img = img.transpose(2, 0, 1)
-            img = torch.from_numpy(img).unsqueeze(0)
-            img = img.to(device)
+            img_torch = torch.from_numpy(img).unsqueeze(0)
+            img_torch = img_torch.to(device)
             scale = scale.to(device)
 
-            loc, conf, landms = net(img)
+            loc, conf, landms = net(img_torch)
 
             priorbox = PriorBox(cfg, image_size=(im_height, im_width))
             priors = priorbox.forward()
             priors = priors.to(device)
             prior_data = priors.data
-            boxes = decode(loc.data.squeeze(0), prior_data, cfg['variance'])
+            boxes = decode(loc.data.squeeze(0), prior_data, cfg["variance"])
             boxes = boxes * scale / resize
             boxes = boxes.cpu().numpy()
             scores = conf.squeeze(0).data.cpu().numpy()[:, 1]
-            landms = decode_landm(landms.data.squeeze(0), prior_data, cfg['variance'])
-            scale1 = torch.Tensor([img.shape[3], img.shape[2], img.shape[3], img.shape[2],
-                                   img.shape[3], img.shape[2], img.shape[3], img.shape[2],
-                                   img.shape[3], img.shape[2]])
+            landms = decode_landm(landms.data.squeeze(0), prior_data, cfg["variance"])
+            scale1 = torch.Tensor(
+                [
+                    img_torch.shape[3],
+                    img_torch.shape[2],
+                    img_torch.shape[3],
+                    img_torch.shape[2],
+                    img_torch.shape[3],
+                    img_torch.shape[2],
+                    img_torch.shape[3],
+                    img_torch.shape[2],
+                    img_torch.shape[3],
+                    img_torch.shape[2],
+                ]
+            )
             scale1 = scale1.to(device)
             landms = landms * scale1 / resize
             landms = landms.cpu().numpy()
@@ -121,35 +129,28 @@ class Instance(api.Instance):
 
         for det in dets:
             det = det.tolist()
-            face_detection.append({
-                'xyxy': det[:4],
-                'score': det[4]
-            })
-            face_landmarks.append({
-                'landmarks': det[5:]
-            })
+            face_detection.append({"xyxy": det[:4], "score": det[4]})
+            face_landmarks.append({"landmarks": det[5:]})
 
         return {
-            'face_detection': face_detection,
-            'face_landmarks': face_landmarks,
+            "face_detection": face_detection,
+            "face_landmarks": face_landmarks,
         }
 
 
 class Package(api.Package):
-    def create(self, *,
-               models: list[api.UsageModel],
-               parameters: dict[str, Any],
-               device: api.Device | None,
-               **kwargs) -> Instance:
-        assert len(models) >= 1, api.MissingModelError('At least one model required')
+    def create(
+        self, *, models: list[api.UsageModel], parameters: dict[str, Any], device: api.Device | None, **kwargs: Any
+    ) -> Instance:
+        assert len(models) >= 1, api.MissingModelError("At least one model required")
 
-        threshold = parameters.get('threshold', 0.6)
+        threshold = parameters.get("threshold", 0.6)
 
         model_path = models[0].cache()
         return Instance(
-            models[0].metadata['network'],
+            models[0].metadata["network"],
             model_path,
-            api.Device('cpu') if device is None else device,
+            api.Device("cpu") if device is None else device,
             threshold=threshold,
         )
 
@@ -162,5 +163,5 @@ def main():
     pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

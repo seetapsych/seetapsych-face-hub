@@ -28,7 +28,7 @@ packages:
       - face/landmarks
     requires: []
     entry:
-      method: seetapsych_face_hub.insightface.retinaface.package.load
+      method: seetapsych_face_hub.insightface.retinaface.load
     parameters:
       - name: input_size
         type: number[]

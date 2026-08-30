@@ -28,7 +28,7 @@ packages:
     requires:
       - face/landmarks
     entry:
-      method: seetapsych_face_hub.insightface.arcface.package.load
+      method: seetapsych_face_hub.insightface.arcface.load
     models:
       - uid: ee4bd102-8b5f-4b94-a52c-d97aca06a729
         name: w600k_r50.onnx
