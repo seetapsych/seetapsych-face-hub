@@ -8,7 +8,7 @@ module:
     - Face
     - Feature
   requirements:
-    - seetapsych-face-hub
+    - seetapsych-face-hub>=0.0.2
     - onnx>=1.20.1
     - onnxruntime>=1.24; sys_platform == 'darwin' and python_version > '3.10'
     - onnxruntime<1.24; sys_platform == 'darwin' and python_version <= '3.10'
