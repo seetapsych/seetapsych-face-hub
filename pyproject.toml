@@ -26,8 +26,8 @@ all = [
     "opencv-python>=4.11.0.86",
     "safetensors>=0.7.0",
     "scikit-image>=0.25.2",
-    "torch>=2.10.0",
-    "torchvision>=0.25.0",
+    "torch>=2.9.1",
+    "torchvision>=0.24.1",
 ]
 dev = [
     "seetapsych-face-hub[all]",
