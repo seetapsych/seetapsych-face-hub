@@ -2,11 +2,12 @@ version: '1.0'
 module:
   uid: 2d26342c-d12f-4c22-a293-f67ffc4a0dff
   name: RetinaFace
-  version: 0.0.1
-  description: 'A PyTorch implementation of RetinaFace: Single-stage Dense Face Localisation in the Wild.'
+  version: '1.0'
+  description: 'PyTorch-based single-stage RetinaFace for face bounding box and 5-point facial landmark detection with MobileNet/ResNet-50 backbones.'
   keywords:
     - Face
     - Detection
+    - Landmarks
   requirements:
     - seetapsych-face-hub
     - numpy>=2.2.6
@@ -16,9 +17,9 @@ module:
     - torchvision>=0.24.1
 packages:
   - uid: 3560b831-6169-4d17-8c4e-50628bfb6bab
-    name: RetinaFace(Ver. PyTorch)
-    description: PyTorch RetinaFace for face detection and 5-point facial landmark localization
-    version: 0.0.1
+    name: FaceDetection-RetinaFace(PyTorch)
+    description: RetinaFace detecting face boxes and 5-point landmarks; supports MobileNet-0.25 (fast) and ResNet-50 (accurate) backbones
+    version: '1.0'
     usage_models: []
     inputs: []
     provides:
@@ -31,11 +32,12 @@ packages:
       - name: threshold
         type: number
         value: 0.6
-        description: Face detection confidence
+        text: Confidence Threshold
+        description: Final confidence threshold applied after NMS. Lower values return more faces with more false positives; higher values are stricter.
     models:
       - uid: bfab82a2-0863-44df-896e-031269844d8d
         name: mobilenet0.25_Final.safetensors
-        version: 0.0.1
+        version: '1.0'
         recommended: true
         metadata:
           network: mobile0.25
@@ -45,7 +47,7 @@ packages:
           url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/retinaface/mobilenet0.25_Final.safetensors
       - uid: b3a37417-e2a9-4709-8619-dd53026fc5a4
         name: Resnet50_Final.safetensors
-        version: 0.0.1
+        version: '1.0'
         metadata:
           network: resnet50
         download:

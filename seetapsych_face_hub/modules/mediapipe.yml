@@ -2,20 +2,21 @@ version: '1.0'
 module:
   uid: 19da81a5-6c9f-4a7b-b388-86f9e03dc6c1
   name: MediaPipe
-  version: 0.0.1
-  description: 'Face Detector and Landmarker of MediaPipe'
+  version: '1.0'
+  description: 'MediaPipe Tasks face detection and 468-point 3D face mesh landmarking via BlazeFace short/full-range models.'
   keywords:
     - Face
     - Detection
-    - Landmarker
+    - Landmarks
+    - Face Mesh
   requirements:
     - seetapsych-face-hub
     - mediapipe>=0.10.33
 packages:
   - uid: 56d8a9a9-0ad9-4d90-ad3f-ffc2f51c1597
-    name: FaceDetection(MediaPipe)
-    description: Detect face bounding boxes via MediaPipe BlazeFace detector
-    version: 0.0.1
+    name: FaceDetection-MediaPipe
+    description: Face bounding box detection via MediaPipe BlazeFace detector with short/full-range/sparse model variants
+    version: '1.0'
     usage_models: []
     inputs: []
     provides:
@@ -28,19 +29,22 @@ packages:
         type: selection
         value: IMAGE
         selection: [IMAGE, VIDEO, LIVE_STREAM]
-        description: Sets the running mode for the task. [IMAGE, VIDEO, LIVE_STREAM].
+        text: Running Mode
+        description: Task execution mode. IMAGE for single static frames; VIDEO/LIVE_STREAM for time-series smoothing across frames.
       - name: min_detection_confidence
         type: number
         value: 0.5
-        description: The minimum confidence score for the face detection to be considered successful.
+        text: Min Detection Confidence
+        description: Minimum confidence score for a detection box to be returned. Lower values catch more faces at the cost of false positives.
       - name: min_suppression_threshold
         type: number
         value: 0.3
-        description: The minimum non-maximum-suppression threshold for face detection to be considered overlapped.
+        text: Min Suppression Threshold
+        description: IoU threshold for non-maximum suppression. Higher values keep more overlapping boxes; lower values prune aggressively.
     models:
       - uid: e12c713f-42d5-4fa9-a0bc-5a8713b1d27d
         name: blaze_face_full_range.tflite
-        version: 0.0.1
+        version: '1.0'
         recommended: true
         download:
           index: blaze_face_full_range.tflite
@@ -48,22 +52,22 @@ packages:
           url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_detector/blaze_face_full_range.tflite
       - uid: a08ffb34-9d65-494d-806d-8dd467fb1a2b
         name: blaze_face_full_range_sparse.tflite
-        version: 0.0.1
+        version: '1.0'
         download:
           index: blaze_face_full_range_sparse.tflite
           sha256: 2c3728e6da56f21e21a320433396fb06d40d9088f2247c05e5635a688d45dfe1
           url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_detector/blaze_face_full_range_sparse.tflite
       - uid: d36eeeec-5d0c-4a83-b420-d2709c06bd35
         name: blaze_face_short_range.tflite
-        version: 0.0.1
+        version: '1.0'
         download:
           index: blaze_face_short_range.tflite
           sha256: b4578f35940bf5a1a655214a1cce5cab13eba73c1297cd78e1a04c2380b0152f
           url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_detector/blaze_face_short_range.tflite
   - uid: 8e646eec-e50f-4102-a658-1449d04296fb
-    name: FaceMesh(MediaPipe)
-    description: Extract 468-point 3D face mesh landmarks with optional blendshapes
-    version: 0.0.1
+    name: FaceMesh-MediaPipe
+    description: 468-point normalized 3D face mesh landmark extraction from detected face boxes with optional blendshapes and pose matrices
+    version: '1.0'
     usage_models: []
     inputs: []
     provides:
@@ -77,35 +81,42 @@ packages:
         type: selection
         value: IMAGE
         selection: [IMAGE, VIDEO, LIVE_STREAM]
-        description: Sets the running mode for the task. [IMAGE, VIDEO, LIVE_STREAM].
+        text: Running Mode
+        description: Task execution mode. VIDEO/LIVE_STREAM enable temporal landmark smoothing when num_faces = 1.
       - name: num_faces
         type: integer
         value: 1
-        description: The maximum number of faces that can be detected by the the FaceLandmarker. Smoothing is only applied when num_faces is set to 1.
+        text: Max Num Faces
+        description: Maximum number of faces to landmark simultaneously. Smoothing is only active when num_faces is 1.
       - name: min_face_detection_confidence
         type: number
         value: 0.5
-        description: The minimum confidence score for the face detection to be considered successful.
+        text: Min Face Detection Confidence
+        description: Minimum confidence for the built-in face detector to succeed when initializing landmark placement.
       - name: min_face_presence_confidence
         type: number
         value: 0.5
-        description: The minimum confidence score of face presence score in the face landmark detection.
+        text: Min Face Presence Confidence
+        description: Minimum confidence that a face is present in the frame before landmark output; filters intermittent dropouts in video.
       - name: min_tracking_confidence
         type: number
         value: 0.5
-        description: The minimum confidence score for the face tracking to be considered successful.
+        text: Min Tracking Confidence
+        description: Minimum tracking confidence to reuse the last known face position vs. re-running full detection. Higher values reduce drift but trigger re-detection more often.
       - name: output_face_blendshapes
         type: boolean
         value: false
-        description: Whether Face Landmarker outputs face blendshapes. Face blendshapes are used for rendering the 3D face model.
+        text: Output Face Blendshapes
+        description: Whether to output 52 face blendshape coefficients for 3D avatar/AR rendering. Adds minor compute overhead.
       - name: output_facial_transformation_matrixes
         type: boolean
         value: false
-        description: Whether FaceLandmarker outputs the facial transformation matrix. FaceLandmarker uses the matrix to transform the face landmarks from a canonical face model to the detected face, so users can apply effects on the detected landmarks.
+        text: Output Facial Pose Matrices
+        description: Whether to output 4x4 facial pose transformation matrices for rigid head pose estimation.
     models:
       - uid: 5293454d-2060-4350-ad22-ab6a24207878
         name: face_landmarker.task
-        version: 0.0.1
+        version: '1.0'
         recommended: true
         download:
           index: face_landmarker.task

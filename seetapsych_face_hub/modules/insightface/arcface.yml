@@ -2,10 +2,11 @@ version: '1.0'
 module:
   uid: 88f1d52a-123d-42d2-9cee-fc0560dd2589
   name: InsightFace
-  version: 0.0.1
-  description: 'ArcFace integrated in InsightFace release version.'
+  version: '1.0'
+  description: 'InsightFace Buffalo face feature extraction via ArcFace producing L2-normalized 512-dim embeddings.'
   keywords:
     - Face
+    - Recognition
     - Feature
   requirements:
     - seetapsych-face-hub>=0.0.2
@@ -18,9 +19,9 @@ module:
     - scikit-image>=0.25.2
 packages:
   - uid: a761cb3a-dba8-4b73-bc2b-6a1c02e55a27
-    name: ArcFace(InsightFace)
-    description: Extract normalized 512-dim face embedding vectors for face recognition
-    version: 0.0.1
+    name: FaceFeature-ArcFace(InsightFace)
+    description: Extract L2-normalized 512-dim face embeddings for recognition, clustering, or similarity search from 5-point aligned faces
+    version: '1.0'
     usage_models: []
     inputs: []
     provides:
@@ -32,7 +33,7 @@ packages:
     models:
       - uid: ee4bd102-8b5f-4b94-a52c-d97aca06a729
         name: w600k_r50.onnx
-        version: 0.0.1
+        version: '1.0'
         recommended: true
         download:
           index: w600k_r50.onnx
@@ -40,7 +41,7 @@ packages:
           url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/w600k_r50.onnx
       - uid: 97f41ab5-297f-435d-add4-98f25aaa6a0d
         name: w600k_mbf.onnx
-        version: 0.0.1
+        version: '1.0'
         download:
           index: w600k_mbf.onnx
           sha256: 9cc6e4a75f0e2bf0b1aed94578f144d15175f357bdc05e815e5c4a02b319eb4f

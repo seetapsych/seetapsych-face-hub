@@ -2,11 +2,12 @@ version: '1.0'
 module:
   uid: 2855fd79-4e16-4958-b680-f9ecdcbbfeab
   name: InsightFace
-  version: 0.0.1
-  description: 'RetinaFace integrated in InsightFace release version.'
+  version: '1.0'
+  description: 'InsightFace Buffalo RetinaFace detector with face bounding box and 5-point landmark detection featuring 500M / 2.5G / 10G FLOPs model variants.'
   keywords:
     - Face
     - Detection
+    - Landmarks
   requirements:
     - seetapsych-face-hub>=0.0.2
     - onnx>=1.20.1
@@ -17,9 +18,9 @@ module:
     - opencv-python>=4.11.0.86
 packages:
   - uid: c938b879-44db-45b0-9a5d-8377f0ace5e5
-    name: RetinaFace(InsightFace)
-    description: Detect face bounding boxes and 5-point landmarks via InsightFace ONNX models
-    version: 0.0.1
+    name: FaceDetection-RetinaFace(InsightFace)
+    description: InsightFace RetinaFace detecting face boxes and 5-point landmarks with configurable input size; 3 accuracy and speed model tiers
+    version: '1.0'
     priority: 100
     usage_models: []
     inputs: []
@@ -33,11 +34,12 @@ packages:
       - name: input_size
         type: number[]
         value: [640, 640]
-        description: Network input size affects detection speed and accuracy
+        text: Network Input Size
+        description: Network input [width, height] in pixels. Larger sizes improve small-face recall but slow inference. Square inputs are recommended.
     models:
       - uid: 1deb39b1-1074-4f6e-b81e-a6a843d011eb
         name: det_500m.onnx
-        version: 0.0.1
+        version: '1.0'
         recommended: true
         download:
           index: det_500m.onnx
@@ -45,14 +47,14 @@ packages:
           url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_500m.onnx
       - uid: af09f5d7-7120-4b13-a398-e501e49ab36c
         name: det_2.5g.onnx
-        version: 0.0.1
+        version: '1.0'
         download:
           index: det_2.5g.onnx
           sha256: 041f73f47371333d1d17a6fee6c8ab4e6aecabefe398ff32cca4e2d5eaee0af9
           url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_2.5g.onnx
       - uid: 99afdb14-4827-49a6-b85a-2bda67dee790
         name: det_10g.onnx
-        version: 0.0.1
+        version: '1.0'
         download:
           index: det_10g.onnx
           sha256: 5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91
