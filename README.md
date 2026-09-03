@@ -68,6 +68,10 @@ Module config: [insightface/retinaface.yml](seetapsych_face_hub/modules/insightf
 | det_2.5g.onnx | | |
 | det_10g.onnx | | |
 
+**Output Attributes**
+- `face/detection` — [spec](https://github.com/seetapsych/seetapsych-attributes#facedetection).
+- `face/landmarks` — [spec](https://github.com/seetapsych/seetapsych-attributes#facelandmarks).
+
 ### InsightFace (ArcFace)
 
 > InsightFace Buffalo face feature extraction via ArcFace models producing L2-normalized 512-dim embeddings.
@@ -88,6 +92,9 @@ Module config: [insightface/arcface.yml](seetapsych_face_hub/modules/insightface
 |---|---|---|
 | w600k_r50.onnx | ✓ | |
 | w600k_mbf.onnx | | |
+
+**Output Attributes**
+- `face/feature` — [spec](https://github.com/seetapsych/seetapsych-attributes#facefeature).
 
 ### MediaPipe
 
@@ -120,6 +127,9 @@ Module config: [mediapipe.yml](seetapsych_face_hub/modules/mediapipe.yml)
 | blaze_face_full_range_sparse.tflite | | |
 | blaze_face_short_range.tflite | | |
 
+**Output Attributes**
+- `face/detection` — [spec](https://github.com/seetapsych/seetapsych-attributes#facedetection).
+
 #### Package: FaceMesh-MediaPipe
 
 **Description**: 468-point normalized 3D face mesh landmark extraction from detected face boxes with optional blendshapes and pose matrices
@@ -141,6 +151,9 @@ Module config: [mediapipe.yml](seetapsych_face_hub/modules/mediapipe.yml)
 | Name | Recommended | Notes |
 |---|---|---|
 | face_landmarker.task | ✓ | |
+
+**Output Attributes**
+- `face/mesh` — [spec](https://github.com/seetapsych/seetapsych-attributes#facemesh).
 
 ## References
 
