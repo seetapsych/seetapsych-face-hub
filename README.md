@@ -119,7 +119,7 @@ Module config: [insightface/arcface.yml](https://github.com/seetapsych/seetapsyc
 
 <div align="center" id="figure-mediapipe-result">
   <img src="https://raw.githubusercontent.com/seetapsych/seetapsych-face-hub/main/assets/example-mediapipe.jpg" alt="MediaPipe Tasks visualization of detected face box and 468-point 3D face mesh landmarks on a sample portrait" style="max-width: 480px; max-height: 480px;"/>
-  <p><em><strong>Figure 3.</strong> MediaPipe Tasks output visualization — BlazeFace detection box and 468-point 3D FaceMesh landmarks.</em></p>
+  <p><em><strong>Figure 3.</strong> MediaPipe Tasks output visualization — face detection bbox and 468-point 3D FaceMesh landmarks.</em></p>
 </div>
 
 Module config: [mediapipe.yml](https://github.com/seetapsych/seetapsych-face-hub/blob/main/seetapsych_face_hub/modules/mediapipe.yml)

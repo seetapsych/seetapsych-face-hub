@@ -15,7 +15,7 @@ override_modules = [
     os.path.join(os.path.dirname(__file__), "../../seetapsych-lib/seetapsych_lib/modules"),
 ]
 
-image_path = os.path.join(os.path.dirname(__file__), "michael-dam.jpg")
+image_path = os.path.join(os.path.dirname(__file__), "ian-dooley.jpg")
 
 COLOR_FACE_PRIMARY: tuple[int, int, int] = (0, 255, 0)
 COLOR_FACE_SECONDARY: tuple[int, int, int] = (255, 0, 255)
