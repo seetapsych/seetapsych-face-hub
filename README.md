@@ -54,7 +54,7 @@ For complete end-to-end examples with visualization, see:
 > InsightFace Buffalo RetinaFace detector: face bounding box + 5-point landmark detection with 500M / 2.5G / 10G FLOPs model variants.
 
 <div align="center" id="figure-retinaface-result">
-  <img src="https://raw.githubusercontent.com/seetapsych/seetapsych-face-hub/main/assets/example-retinaface.jpg" alt="InsightFace RetinaFace visualization of face boxes, confidence and 5-point landmarks on a sample portrait" style="max-width: 480px; max-height: 480px;"/>
+  <img src="https://raw.githubusercontent.com/seetapsych/seetapsych-face-hub/main/assets/example-retinaface.jpg" alt="InsightFace RetinaFace visualization of face boxes, confidence and 5-point landmarks on a sample portrait" height="480"/>
   <p><em><strong>Figure 1.</strong> InsightFace RetinaFace output visualization — detected faces, confidence scores, and 5-point landmarks.</em></p>
 </div>
 
@@ -89,7 +89,7 @@ Module config: [insightface/retinaface.yml](https://github.com/seetapsych/seetap
 > InsightFace Buffalo face feature extraction via ArcFace models producing L2-normalized 512-dim embeddings.
 
 <div align="center" id="figure-arcface-result">
-  <img src="https://raw.githubusercontent.com/seetapsych/seetapsych-face-hub/main/assets/example-arcface.jpg" alt="InsightFace ArcFace visualization of RetinaFace detections alongside a vertical voiceprint-style 512-dim embedding spectrum" style="max-width: 480px; max-height: 480px;"/>
+  <img src="https://raw.githubusercontent.com/seetapsych/seetapsych-face-hub/main/assets/example-arcface.jpg" alt="InsightFace ArcFace visualization of RetinaFace detections alongside a vertical voiceprint-style 512-dim embedding spectrum" height="480"/>
   <p><em><strong>Figure 2.</strong> InsightFace ArcFace output visualization — detected face and vertical voiceprint-style 512-dim embedding spectrum with sign-magnitude heat bars.</em></p>
 </div>
 
@@ -118,7 +118,7 @@ Module config: [insightface/arcface.yml](https://github.com/seetapsych/seetapsyc
 > MediaPipe Tasks face detection and 468-point 3D face mesh landmarking via BlazeFace short/full-range models.
 
 <div align="center" id="figure-mediapipe-result">
-  <img src="https://raw.githubusercontent.com/seetapsych/seetapsych-face-hub/main/assets/example-mediapipe.jpg" alt="MediaPipe Tasks visualization of detected face box and 468-point 3D face mesh landmarks on a sample portrait" style="max-width: 480px; max-height: 480px;"/>
+  <img src="https://raw.githubusercontent.com/seetapsych/seetapsych-face-hub/main/assets/example-mediapipe.jpg" alt="MediaPipe Tasks visualization of detected face box and 468-point 3D face mesh landmarks on a sample portrait" height="480"/>
   <p><em><strong>Figure 3.</strong> MediaPipe Tasks output visualization — face detection bbox and 468-point 3D FaceMesh landmarks.</em></p>
 </div>
 
