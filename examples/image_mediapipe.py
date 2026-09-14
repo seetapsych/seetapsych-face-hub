@@ -23,6 +23,7 @@ COLOR_MESH: tuple[int, int, int] = (255, 0, 0)
 COLOR_SCORE: tuple[int, int, int] = (255, 255, 255)
 LINE_STYLE_SOLID: int = cv2.LINE_8
 LINE_STYLE_DASH_GAP: int = 8
+LABEL_BG_ALPHA: float = 0.45
 
 
 def fit_image(image: numpy.ndarray, max_width: int = 1280, max_height: int = 960) -> tuple[numpy.ndarray, float]:
@@ -109,6 +110,39 @@ def draw_rectangle_dashed(
         cv2.line(image, a, b, color, thickness, lineType=LINE_STYLE_SOLID)
 
 
+def draw_label_rect(
+    image: numpy.ndarray,
+    pt1: tuple[int, int],
+    pt2: tuple[int, int],
+    *,
+    bg_color: tuple[int, int, int] = (0, 0, 0),
+    alpha: float = LABEL_BG_ALPHA,
+) -> None:
+    """Draw a semi-transparent filled rectangle used as a label background.
+
+    Args:
+        image: Target image (in-place).
+        pt1: Top-left corner (x, y).
+        pt2: Bottom-right corner (x, y).
+        bg_color: Fill BGR color. Defaults to black.
+        alpha: Opacity of the fill (0 = fully transparent, 1 = fully opaque).
+    """
+    x1, y1 = pt1
+    x2, y2 = pt2
+    h, w = image.shape[:2]
+    if x2 <= x1 or y2 <= y1 or x1 >= w or y1 >= h or x2 <= 0 or y2 <= 0:
+        return
+    rx1 = int(max(0, min(x1, w - 1)))
+    ry1 = int(max(0, min(y1, h - 1)))
+    rx2 = int(max(1, min(x2, w)))
+    ry2 = int(max(1, min(y2, h)))
+    overlay = image[ry1:ry2, rx1:rx2]
+    if overlay.size == 0:
+        return
+    filled = numpy.full_like(overlay, bg_color, dtype=numpy.uint8)
+    image[ry1:ry2, rx1:rx2] = cv2.addWeighted(overlay, 1.0 - alpha, filled, alpha, 0.0)
+
+
 def draw_results(image: numpy.ndarray, report: dict[str, Any]) -> numpy.ndarray:
     """Render face bboxes and MediaPipe 468-point face mesh dots.
 
@@ -158,7 +192,7 @@ def draw_results(image: numpy.ndarray, report: dict[str, Any]) -> numpy.ndarray:
         label_y2 = label_y1 + label_bg_h
         label_x1 = xyxy[0] + (0 if not label_inside else 3)
         label_x2 = label_x1 + text_w + 8
-        cv2.rectangle(vis, (label_x1, label_y1), (label_x2, label_y2), (0, 0, 0), -1)
+        draw_label_rect(vis, (label_x1, label_y1), (label_x2, label_y2))
         put_text_with_shadow(
             vis,
             label,

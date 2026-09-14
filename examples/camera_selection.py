@@ -17,7 +17,9 @@ override_modules = [
 COLOR_FACE_SELECTED: tuple[int, int, int] = (0, 255, 0)
 COLOR_PID_LABEL: tuple[int, int, int] = (0, 0, 255)
 COLOR_HINT: tuple[int, int, int] = (0, 255, 255)
+COLOR_LABEL_TEXT: tuple[int, int, int] = (255, 255, 255)
 LINE_STYLE_SOLID: int = cv2.LINE_8
+LABEL_BG_ALPHA: float = 0.45
 
 
 def open_camera(camera_id: int = 0) -> cv2.VideoCapture:
@@ -77,6 +79,39 @@ def put_text_with_shadow(
     x, y = org
     cv2.putText(image, text, (x + offset, y + offset), font, font_scale, shadow_color, thickness, line_type)
     cv2.putText(image, text, org, font, font_scale, color, thickness, line_type)
+
+
+def draw_label_rect(
+    image: numpy.ndarray,
+    pt1: tuple[int, int],
+    pt2: tuple[int, int],
+    *,
+    bg_color: tuple[int, int, int] = (0, 0, 0),
+    alpha: float = LABEL_BG_ALPHA,
+) -> None:
+    """Draw a semi-transparent filled rectangle used as a label background.
+
+    Args:
+        image: Target image (in-place).
+        pt1: Top-left corner (x, y).
+        pt2: Bottom-right corner (x, y).
+        bg_color: Fill BGR color. Defaults to black.
+        alpha: Opacity of the fill (0 = fully transparent, 1 = fully opaque).
+    """
+    x1, y1 = pt1
+    x2, y2 = pt2
+    h, w = image.shape[:2]
+    if x2 <= x1 or y2 <= y1 or x1 >= w or y1 >= h or x2 <= 0 or y2 <= 0:
+        return
+    rx1 = int(max(0, min(x1, w - 1)))
+    ry1 = int(max(0, min(y1, h - 1)))
+    rx2 = int(max(1, min(x2, w)))
+    ry2 = int(max(1, min(y2, h)))
+    overlay = image[ry1:ry2, rx1:rx2]
+    if overlay.size == 0:
+        return
+    filled = numpy.full_like(overlay, bg_color, dtype=numpy.uint8)
+    image[ry1:ry2, rx1:rx2] = cv2.addWeighted(overlay, 1.0 - alpha, filled, alpha, 0.0)
 
 
 def main():
@@ -148,7 +183,7 @@ def main():
                 label_inside = True
             ly2 = ly1 + label_bg_h
             lx = x1_flip + (0 if not label_inside else 3)
-            cv2.rectangle(frame, (lx, ly1), (lx + tw + 8, ly2), (0, 0, 0), -1)
+            draw_label_rect(frame, (lx, ly1), (lx + tw + 8, ly2))
             put_text_with_shadow(
                 frame,
                 label,
@@ -178,7 +213,7 @@ def main():
                 pid_x1 = x2_flip - pid_w - 12 - (0 if not pid_inside else -3)
                 pid_x1 = max(x1_flip + (3 if pid_inside else 0), pid_x1)
                 pid_x2 = pid_x1 + pid_w + 12
-                cv2.rectangle(frame, (pid_x1, pid_y1), (pid_x2, pid_y2), (0, 0, 0), -1)
+                draw_label_rect(frame, (pid_x1, pid_y1), (pid_x2, pid_y2))
                 put_text_with_shadow(
                     frame,
                     pid_text,
