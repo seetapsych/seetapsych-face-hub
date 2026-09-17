@@ -38,11 +38,11 @@ packages:
         download:
           index: w600k_r50.onnx
           sha256: 4c06341c33c2ca1f86781dab0e829f88ad5b64be9fba56e56bc9ebdefc619e43
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/w600k_r50.onnx
+          url: https://www.modelscope.cn/models/seetapsych/seetapsych-models/resolve/master/insightface/buffalo/w600k_r50.onnx
       - uid: 97f41ab5-297f-435d-add4-98f25aaa6a0d
         name: w600k_mbf.onnx
         version: '1.0'
         download:
           index: w600k_mbf.onnx
           sha256: 9cc6e4a75f0e2bf0b1aed94578f144d15175f357bdc05e815e5c4a02b319eb4f
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/w600k_mbf.onnx
+          url: https://www.modelscope.cn/models/seetapsych/seetapsych-models/resolve/master/insightface/buffalo/w600k_mbf.onnx

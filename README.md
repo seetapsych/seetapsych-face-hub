@@ -2,6 +2,11 @@
 
 > Community open-source face modules for SeetaPsych
 
+[简体中文](README_CN.md) | English
+
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)](pyproject.toml)
+[![License](https://img.shields.io/badge/License-BSD--3--Clause-blue.svg)](LICENSE)
+
 ## Usage
 
 This project is already included in the seetapsych-lib default configuration. Download and use it via `seetapsych-manager download`.
@@ -35,18 +40,18 @@ pipeline.add_attributes("face/detection")
 
 For complete end-to-end examples with visualization, see:
 
-* [examples/image_retinaface.py](https://github.com/seetapsych/seetapsych-face-hub/blob/main/examples/image_retinaface.py) — static-image face detection + 5-point landmarks via InsightFace RetinaFace.
-* [examples/image_mediapipe.py](https://github.com/seetapsych/seetapsych-face-hub/blob/main/examples/image_mediapipe.py) — static-image face detection + 468-point 3D mesh via MediaPipe Tasks.
-* [examples/image_arcface.py](https://github.com/seetapsych/seetapsych-face-hub/blob/main/examples/image_arcface.py) — static-image RetinaFace + 512-dim ArcFace embedding with voiceprint-style spectrum visualization.
-* [examples/camera_selection.py](https://github.com/seetapsych/seetapsych-face-hub/blob/main/examples/camera_selection.py) — live-camera face detection + PID-based target selection & tracking.
+* [examples/image_retinaface.py](examples/image_retinaface.py) — static-image face detection + 5-point landmarks via InsightFace RetinaFace.
+* [examples/image_mediapipe.py](examples/image_mediapipe.py) — static-image face detection + 468-point 3D mesh via MediaPipe Tasks.
+* [examples/image_arcface.py](examples/image_arcface.py) — static-image RetinaFace + 512-dim ArcFace embedding with voiceprint-style spectrum visualization.
+* [examples/camera_selection.py](examples/camera_selection.py) — live-camera face detection + PID-based target selection & tracking.
 
 ### Module Catalog
 
 | Module YML | Packages |
 |---|---|
-| [insightface/retinaface.yml](https://github.com/seetapsych/seetapsych-face-hub/blob/main/seetapsych_face_hub/modules/insightface/retinaface.yml) | FaceDetection-RetinaFace(InsightFace) |
-| [insightface/arcface.yml](https://github.com/seetapsych/seetapsych-face-hub/blob/main/seetapsych_face_hub/modules/insightface/arcface.yml) | FaceFeature-ArcFace(InsightFace) |
-| [mediapipe.yml](https://github.com/seetapsych/seetapsych-face-hub/blob/main/seetapsych_face_hub/modules/mediapipe.yml) | FaceDetection-MediaPipe, FaceMesh-MediaPipe |
+| [insightface/retinaface.yml](seetapsych_face_hub/modules/insightface/retinaface.yml) | FaceDetection-RetinaFace(InsightFace) |
+| [insightface/arcface.yml](seetapsych_face_hub/modules/insightface/arcface.yml) | FaceFeature-ArcFace(InsightFace) |
+| [mediapipe.yml](seetapsych_face_hub/modules/mediapipe.yml) | FaceDetection-MediaPipe, FaceMesh-MediaPipe |
 | [retinaface.yml](https://github.com/seetapsych/seetapsych-face-hub/blob/main/seetapsych_face_hub/modules/retinaface.yml) | FaceDetection-RetinaFace(PyTorch) |
 
 ### InsightFace (RetinaFace)
@@ -54,11 +59,11 @@ For complete end-to-end examples with visualization, see:
 > InsightFace Buffalo RetinaFace detector: face bounding box + 5-point landmark detection with 500M / 2.5G / 10G FLOPs model variants.
 
 <div align="center" id="figure-retinaface-result">
-  <img src="https://raw.githubusercontent.com/seetapsych/seetapsych-face-hub/main/assets/example-retinaface.jpg" alt="InsightFace RetinaFace visualization of face boxes, confidence and 5-point landmarks on a sample portrait" height="480"/>
+  <img src="assets/example-retinaface.jpg" alt="InsightFace RetinaFace visualization of face boxes, confidence and 5-point landmarks on a sample portrait" height="480"/>
   <p><em><strong>Figure 1.</strong> InsightFace RetinaFace output visualization — detected faces, confidence scores, and 5-point landmarks.</em></p>
 </div>
 
-Module config: [insightface/retinaface.yml](https://github.com/seetapsych/seetapsych-face-hub/blob/main/seetapsych_face_hub/modules/insightface/retinaface.yml)
+Module config: [insightface/retinaface.yml](seetapsych_face_hub/modules/insightface/retinaface.yml)
 
 | Package Name | Provides Attributes | Requires Attributes |
 |---|---|---|
@@ -89,11 +94,11 @@ Module config: [insightface/retinaface.yml](https://github.com/seetapsych/seetap
 > InsightFace Buffalo face feature extraction via ArcFace models producing L2-normalized 512-dim embeddings.
 
 <div align="center" id="figure-arcface-result">
-  <img src="https://raw.githubusercontent.com/seetapsych/seetapsych-face-hub/main/assets/example-arcface.jpg" alt="InsightFace ArcFace visualization of RetinaFace detections alongside a vertical voiceprint-style 512-dim embedding spectrum" height="480"/>
+  <img src="assets/example-arcface.jpg" alt="InsightFace ArcFace visualization of RetinaFace detections alongside a vertical voiceprint-style 512-dim embedding spectrum" height="480"/>
   <p><em><strong>Figure 2.</strong> InsightFace ArcFace output visualization — detected face and vertical voiceprint-style 512-dim embedding spectrum with sign-magnitude heat bars.</em></p>
 </div>
 
-Module config: [insightface/arcface.yml](https://github.com/seetapsych/seetapsych-face-hub/blob/main/seetapsych_face_hub/modules/insightface/arcface.yml)
+Module config: [insightface/arcface.yml](seetapsych_face_hub/modules/insightface/arcface.yml)
 
 | Package Name | Provides Attributes | Requires Attributes |
 |---|---|---|
@@ -118,11 +123,11 @@ Module config: [insightface/arcface.yml](https://github.com/seetapsych/seetapsyc
 > MediaPipe Tasks face detection and 468-point 3D face mesh landmarking via BlazeFace short/full-range models.
 
 <div align="center" id="figure-mediapipe-result">
-  <img src="https://raw.githubusercontent.com/seetapsych/seetapsych-face-hub/main/assets/example-mediapipe.jpg" alt="MediaPipe Tasks visualization of detected face box and 468-point 3D face mesh landmarks on a sample portrait" height="480"/>
+  <img src="assets/example-mediapipe.jpg" alt="MediaPipe Tasks visualization of detected face box and 468-point 3D face mesh landmarks on a sample portrait" height="480"/>
   <p><em><strong>Figure 3.</strong> MediaPipe Tasks output visualization — face detection bbox and 468-point 3D FaceMesh landmarks.</em></p>
 </div>
 
-Module config: [mediapipe.yml](https://github.com/seetapsych/seetapsych-face-hub/blob/main/seetapsych_face_hub/modules/mediapipe.yml)
+Module config: [mediapipe.yml](seetapsych_face_hub/modules/mediapipe.yml)
 
 | Package Name | Provides Attributes | Requires Attributes |
 |---|---|---|

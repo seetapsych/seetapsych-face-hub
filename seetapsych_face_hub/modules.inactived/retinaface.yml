@@ -44,7 +44,7 @@ packages:
         download:
           index: mobilenet0.25_Final.safetensors
           sha256: ed8634b7b067e4be4921b3d1e93868d6224ddbfbc7eba693c80594fbcdd28fb2
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/retinaface/mobilenet0.25_Final.safetensors
+          url: https://www.modelscope.cn/models/seetapsych/seetapsych-models/resolve/master/retinaface/mobilenet0.25_Final.safetensors
       - uid: b3a37417-e2a9-4709-8619-dd53026fc5a4
         name: Resnet50_Final.safetensors
         version: '1.0'
@@ -53,4 +53,4 @@ packages:
         download:
           index: Resnet50_Final.safetensors
           sha256: c4f365f8288288d1c28f66f96b73b16b57d04851ce813c23b45d5b73b405d32a
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/retinaface/Resnet50_Final.safetensors
+          url: https://www.modelscope.cn/models/seetapsych/seetapsych-models/resolve/master/retinaface/Resnet50_Final.safetensors

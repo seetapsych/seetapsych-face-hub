@@ -44,18 +44,18 @@ packages:
         download:
           index: det_500m.onnx
           sha256: 5e4447f50245bbd7966bd6c0fa52938c61474a04ec7def48753668a9d8b4ea3a
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_500m.onnx
+          url: https://www.modelscope.cn/models/seetapsych/seetapsych-models/resolve/master/insightface/buffalo/det_500m.onnx
       - uid: af09f5d7-7120-4b13-a398-e501e49ab36c
         name: det_2.5g.onnx
         version: '1.0'
         download:
           index: det_2.5g.onnx
           sha256: 041f73f47371333d1d17a6fee6c8ab4e6aecabefe398ff32cca4e2d5eaee0af9
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_2.5g.onnx
+          url: https://www.modelscope.cn/models/seetapsych/seetapsych-models/resolve/master/insightface/buffalo/det_2.5g.onnx
       - uid: 99afdb14-4827-49a6-b85a-2bda67dee790
         name: det_10g.onnx
         version: '1.0'
         download:
           index: det_10g.onnx
           sha256: 5838f7fe053675b1c7a08b633df49e7af5495cee0493c7dcf6697200b85b5b91
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/insightface/buffalo/det_10g.onnx
+          url: https://www.modelscope.cn/models/seetapsych/seetapsych-models/resolve/master/insightface/buffalo/det_10g.onnx

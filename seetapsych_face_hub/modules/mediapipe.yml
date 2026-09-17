@@ -49,21 +49,21 @@ packages:
         download:
           index: blaze_face_full_range.tflite
           sha256: 3698b18f063835bc609069ef052228fbe86d9c9a6dc8dcb7c7c2d69aed2b181b
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_detector/blaze_face_full_range.tflite
+          url: https://www.modelscope.cn/models/seetapsych/seetapsych-models/resolve/master/mediapipe/face_detector/blaze_face_full_range.tflite
       - uid: a08ffb34-9d65-494d-806d-8dd467fb1a2b
         name: blaze_face_full_range_sparse.tflite
         version: '1.0'
         download:
           index: blaze_face_full_range_sparse.tflite
           sha256: 2c3728e6da56f21e21a320433396fb06d40d9088f2247c05e5635a688d45dfe1
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_detector/blaze_face_full_range_sparse.tflite
+          url: https://www.modelscope.cn/models/seetapsych/seetapsych-models/resolve/master/mediapipe/face_detector/blaze_face_full_range_sparse.tflite
       - uid: d36eeeec-5d0c-4a83-b420-d2709c06bd35
         name: blaze_face_short_range.tflite
         version: '1.0'
         download:
           index: blaze_face_short_range.tflite
           sha256: b4578f35940bf5a1a655214a1cce5cab13eba73c1297cd78e1a04c2380b0152f
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_detector/blaze_face_short_range.tflite
+          url: https://www.modelscope.cn/models/seetapsych/seetapsych-models/resolve/master/mediapipe/face_detector/blaze_face_short_range.tflite
   - uid: 8e646eec-e50f-4102-a658-1449d04296fb
     name: FaceMesh-MediaPipe
     description: 468-point normalized 3D face mesh landmark extraction from detected face boxes with optional blendshapes and pose matrices
@@ -121,4 +121,4 @@ packages:
         download:
           index: face_landmarker.task
           sha256: 64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff
-          url: https://www.modelscope.cn/models/levalup/cloud-models/resolve/master/mediapipe/face_landmarker/face_landmarker.task
+          url: https://www.modelscope.cn/models/seetapsych/seetapsych-models/resolve/master/mediapipe/face_landmarker/face_landmarker.task
