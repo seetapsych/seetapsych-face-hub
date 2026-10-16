@@ -2,10 +2,14 @@
 
 import os
 import platform
+import time
+from typing import Any
 
 import cv2
 import numpy
+from camera_window import CameraWindow, draw_text, fit_geometry
 from seetapsych_lib.runtime.factory import Factory
+from seetapsych_lib.runtime.parallel.future import Future
 from seetapsych_lib.runtime.parallel_runner import ParallelRunner as Runner
 from seetapsych_lib.runtime.pipeline import Pipeline
 
@@ -114,7 +118,61 @@ def draw_label_rect(
     image[ry1:ry2, rx1:rx2] = cv2.addWeighted(overlay, 1.0 - alpha, filled, alpha, 0.0)
 
 
-def main():
+def draw_results(
+    frame: numpy.ndarray, report: dict[str, Any], display_size: tuple[int, int] | None = None
+) -> numpy.ndarray:
+    """Draw the latest detections on a mirrored live preview.
+
+    Args:
+        frame: Current camera frame, not the inference input.
+        report: Latest report; an empty dict hides stale annotations.
+        display_size: Optional viewport bounds; inference coordinates stay in source pixels.
+
+    Returns:
+        Mirrored, annotated preview.
+    """
+    source_height, source_width = frame.shape[:2]
+    if display_size is not None:
+        _, _, rw, rh = fit_geometry((source_width, source_height), display_size)
+        interpolation = cv2.INTER_AREA if rw < source_width else cv2.INTER_CUBIC
+        frame = cv2.resize(frame, (rw, rh), interpolation=interpolation)
+    canvas = cv2.flip(frame, 1)
+    width = canvas.shape[1]
+    scale_x, scale_y = width / source_width, canvas.shape[0] / source_height
+    ui_scale = min(width / 640, canvas.shape[0] / 480)
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    pid = report.get("face_selection", {}).get("pid", 0)
+    for index, bbox in enumerate(report.get("face_detection", [])):
+        x1, y1, x2, y2 = (
+            int(round(v * scale)) for v, scale in zip(bbox["xyxy"], (scale_x, scale_y, scale_x, scale_y), strict=True)
+        )
+        left, right = width - 1 - x2, width - 1 - x1
+        color = COLOR_FACE_SELECTED if index == 0 else (180, 180, 180)
+        cv2.rectangle(canvas, (left, y1), (right, y2), color, max(1, round(2 * ui_scale)), cv2.LINE_AA)
+        label = f"{bbox.get('score', 0.0):.2f}"
+        if index == 0 and pid > 0:
+            label = f"PID {pid} | {label}"
+        (tw, th), _ = cv2.getTextSize(label, font, 0.6 * ui_scale, 1)
+        label_y = max(th + 8, y1 - 5)
+        draw_label_rect(canvas, (left, label_y - th - 6), (left + tw + 8, label_y + 4))
+        put_text_with_shadow(canvas, label, (left + 4, label_y), font, 0.6 * ui_scale, COLOR_LABEL_TEXT)
+    draw_label_rect(canvas, (0, canvas.shape[0] - round(72 * ui_scale)), (width, canvas.shape[0]))
+    draw_text(
+        canvas,
+        "F = Fullscreen | R = Reset | Esc / Q / X = Exit",
+        (round(16 * ui_scale), canvas.shape[0] - round(16 * ui_scale)),
+        COLOR_HINT,
+        scale=0.6 * ui_scale,
+    )
+    return canvas
+
+
+def run_camera(cap: cv2.VideoCapture) -> None:
+    """Run one asynchronous inference at a time while rendering every frame.
+
+    Args:
+        cap: Open camera owned by the caller.
+    """
     factory = Factory()
     # load_dir_modules tolerates missing dirs — example runs fine without local overrides.
     for root in override_modules:
@@ -139,120 +197,71 @@ def main():
     runner = Runner(pipeline)
 
     window_name = "Camera Face Selection"
-    cap = open_camera(0)
-
-    if not cap.isOpened():
-        raise RuntimeError("Could not open camera")
-
-    while cap.isOpened():
-        ok = cap.grab()
-        if not ok:
-            break
-        ok, frame = cap.retrieve()
-        if not ok:
-            break
-
-        report = runner.run(data={"default": frame})
-
-        frame = cv2.flip(frame, 1)
-        f_h, f_w = frame.shape[:2]
-
-        face_detection = report.get("face_detection", [])
-        face_selection = report.get("face_selection", {})
-
-        for bbox in face_detection:
-            xyxy = [int(round(v)) for v in bbox["xyxy"]]
-            x1, y1, x2, y2 = xyxy
-            x1_flip = f_w - x2
-            x2_flip = f_w - x1
-            cv2.rectangle(frame, (x1_flip, y1), (x2_flip, y2), COLOR_FACE_SELECTED, 2, lineType=LINE_STYLE_SOLID)
-
-            score = bbox.get("score", 0.0)
-            label = f"{score:.2f}"
-            font = cv2.FONT_HERSHEY_SIMPLEX
-            fs, thick = 0.55, 1
-            (tw, th), _ = cv2.getTextSize(label, font, fs, thick)
-            label_bg_h = th + 8
-            bbox_gap = 2
-            room_above = y1 - label_bg_h - bbox_gap
-            if room_above >= 0:
-                ly1 = room_above
-                label_inside = False
-            else:
-                ly1 = y1 + 3
-                label_inside = True
-            ly2 = ly1 + label_bg_h
-            lx = x1_flip + (0 if not label_inside else 3)
-            draw_label_rect(frame, (lx, ly1), (lx + tw + 8, ly2))
-            put_text_with_shadow(
-                frame,
-                label,
-                (lx + 4, ly1 + th + 4),
-                font,
-                fs,
-                (255, 255, 255),
-                thick,
-                shadow_base_offset_px=1,
+    pending: Future[dict[str, Any]] | None = None
+    report: dict[str, Any] = {}
+    reset_requested = False
+    submitted_at = result_at = 0.0
+    inference_fps = 0.0
+    try:
+        window = CameraWindow(window_name, (960, 720))
+        while cap.isOpened():
+            ok, frame = cap.read()
+            if not ok:
+                print("Camera stopped delivering frames. Check the connection and camera permissions.")
+                break
+            now = time.monotonic()
+            if pending is not None and pending.done():
+                output = pending.get()
+                pending = None
+                if not reset_requested:
+                    report = output
+                    result_at = submitted_at
+                    inference_fps = 1.0 / max(now - submitted_at, 1e-6)
+            if pending is None:
+                if reset_requested:
+                    runner.reset()
+                    report = {}
+                    reset_requested = False
+                submitted_at = now
+                pending = runner.run_async(data={"default": frame.copy()}, timestamp=time.time())
+            result_ttl = max(1.0, 2.0 / max(inference_fps, 0.01))
+            canvas = draw_results(frame, report if now - result_at < result_ttl else {}, window.size())
+            ui_scale = min(canvas.shape[1] / 640, canvas.shape[0] / 480)
+            status = "Reset pending" if reset_requested else f"Inference: {inference_fps:.1f} FPS"
+            draw_text(
+                canvas,
+                status,
+                (round(16 * ui_scale), canvas.shape[0] - round(44 * ui_scale)),
+                COLOR_LABEL_TEXT,
+                scale=0.6 * ui_scale,
             )
+            window.show(canvas)
+            key = cv2.waitKey(1) & 0xFF
+            if key in (27, ord("q"), ord("Q"), ord("x"), ord("X")):
+                break
+            if cv2.getWindowProperty(window_name, cv2.WND_PROP_VISIBLE) < 1:
+                break
+            window.handle_key(key)
+            if key in (ord("r"), ord("R")):
+                reset_requested = True
+                report = {}
+    finally:
+        if pending is not None:
+            pending.cancel()
+        runner.dispose()
 
-            pid = bbox.get("pid") or face_selection.get("pid") or 0
-            if pid > 0:
-                pid_text = f"PID: {pid}"
-                pid_fs, pid_thick = 0.9, 2
-                (pid_w, pid_h), _ = cv2.getTextSize(pid_text, font, pid_fs, pid_thick)
-                pid_bg_h = pid_h + 10
-                pid_gap = 4
-                pid_room_above = y1 - pid_bg_h - pid_gap
-                if pid_room_above >= 0:
-                    pid_y1 = pid_room_above
-                    pid_inside = False
-                else:
-                    pid_y1 = y1 + 3
-                    pid_inside = True
-                pid_y2 = pid_y1 + pid_bg_h
-                pid_x1 = x2_flip - pid_w - 12 - (0 if not pid_inside else -3)
-                pid_x1 = max(x1_flip + (3 if pid_inside else 0), pid_x1)
-                pid_x2 = pid_x1 + pid_w + 12
-                draw_label_rect(frame, (pid_x1, pid_y1), (pid_x2, pid_y2))
-                put_text_with_shadow(
-                    frame,
-                    pid_text,
-                    (pid_x1 + 6, pid_y1 + pid_h + 5),
-                    font,
-                    pid_fs,
-                    COLOR_PID_LABEL,
-                    pid_thick,
-                    shadow_base_offset_px=2,
-                )
 
-        hint_lines = [
-            "R = Reset tracker",
-            "Esc / Q / X = Exit",
-        ]
-        hint_y = f_h - 16
-        for line in reversed(hint_lines):
-            (_, th), _ = cv2.getTextSize(line, font, 0.6, 1)
-            put_text_with_shadow(frame, line, (16, hint_y), font, 0.6, COLOR_HINT, 1, shadow_base_offset_px=1)
-            hint_y -= th + 10
-
-        cv2.imshow(window_name, frame)
-
-        key = cv2.waitKey(1)
-        if key == 27:
-            break
-
-        key &= 0xFF
-        if key in {ord("q"), ord("x")}:
-            break
-
-        if key == ord("r"):
-            runner.reset()
-            _ = f_h
-
-    if cv2.getWindowProperty(window_name, cv2.WND_PROP_VISIBLE):
-        cv2.destroyWindow(window_name)
-    cap.release()
-    runner.dispose()
+def main() -> None:
+    """Open the camera before preparing models and release resources on exit."""
+    cap = open_camera(0)
+    try:
+        if not cap.isOpened():
+            print("Could not open camera 0. Check the device index, camera permissions, and other camera apps.")
+            return
+        run_camera(cap)
+    finally:
+        cap.release()
+        cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
